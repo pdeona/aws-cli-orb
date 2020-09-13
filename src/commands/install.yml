@@ -30,7 +30,9 @@ steps:
 
         if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
 
-        if [ "<<parameters.skip-install-check>>" == "false" ]; then
+        if [ "<<parameters.skip-install-check>>" == "true" ]; then
+            echo "Skipping version check. Installing CLI"
+        else
             if ! command -v aws --version >/dev/null 2>&1  ; then
                 echo AWS is not installed
             else
@@ -44,8 +46,6 @@ steps:
                     AWS_CLI_INSTALLED_VERSION="1"
                 fi
             fi
-        else
-            echo "Skipping version check. Installing CLI"
         fi
 
         AWS_V2_UPDATE_PARAM=""
